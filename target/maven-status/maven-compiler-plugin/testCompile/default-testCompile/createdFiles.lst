@@ -1,0 +1,5 @@
+com\dguerrar\test\TestConverter.class
+com\dguerrar\integration\tests\TestSetup.class
+com\dguerrar\test\TestManagerNotification.class
+com\dguerrar\integration\tests\TestController.class
+com\dguerrar\test\TestManagerOrder.class

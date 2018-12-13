@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: magento-coding-challenge
+Implementation-Version: 1.0.0
+Built-By: david
+Implementation-Vendor-Id: com.dguerrar
+Build-Jdk: 1.8.0_92
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/magento-coding-challenge
+Created-By: Maven Integration for Eclipse
+
