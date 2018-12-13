@@ -8,12 +8,12 @@ com\dguerrar\converter\OrderConverter.class
 com\dguerrar\managers\impl\OrderManagerImpl.class
 com\dguerrar\controllers\exception\InvalidOrderException.class
 com\dguerrar\controllers\OrderController.class
-com\dguerrar\quarts\jobs\EmailJob.class
 com\dguerrar\validators\OrderValidator.class
 com\dguerrar\managers\OrderManager.class
 com\dguerrar\generic\GenericModule.class
 com\dguerrar\controllers\exception\ParseableOrderRuntimeException.class
 com\dguerrar\controllers\exception\OrderBindingException.class
+com\dguerrar\scheduled\ScheduledEmail.class
 com\dguerrar\domain\Notification.class
 com\dguerrar\constants\Constants.class
 com\dguerrar\domain\base\DataContainer.class

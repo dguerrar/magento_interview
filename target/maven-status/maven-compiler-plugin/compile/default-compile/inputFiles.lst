@@ -1,7 +1,6 @@
 C:\programacion\magento\src\main\java\com\dguerrar\controllers\impl\OrderControllerImpl.java
 C:\programacion\magento\src\main\java\com\dguerrar\controllers\exception\InvalidOrderException.java
 C:\programacion\magento\src\main\java\com\dguerrar\controllers\exception\OrderBindingException.java
-C:\programacion\magento\src\main\java\com\dguerrar\quarts\jobs\EmailJob.java
 C:\programacion\magento\src\main\java\com\dguerrar\controllers\exception\OrderLineSequenceException.java
 C:\programacion\magento\src\main\java\com\dguerrar\managers\impl\NotificationManagerImpl.java
 C:\programacion\magento\src\main\java\com\dguerrar\constants\Constants.java
@@ -22,6 +21,7 @@ C:\programacion\magento\src\main\java\com\dguerrar\managers\OrderManager.java
 C:\programacion\magento\src\main\java\com\dguerrar\domain\base\DataContainer.java
 C:\programacion\magento\src\main\java\com\dguerrar\controllers\exception\advices\ExceptionControllerAdviceRuntime.java
 C:\programacion\magento\src\main\java\com\dguerrar\managers\NotificationManager.java
+C:\programacion\magento\src\main\java\com\dguerrar\scheduled\ScheduledEmail.java
 C:\programacion\magento\src\main\java\com\dguerrar\domain\base\BaseObject.java
 C:\programacion\magento\src\main\java\com\dguerrar\Application.java
 C:\programacion\magento\src\main\java\com\dguerrar\domain\Notification.java

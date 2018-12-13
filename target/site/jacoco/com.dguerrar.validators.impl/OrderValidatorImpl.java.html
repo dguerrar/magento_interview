@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderValidatorImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">magento-coding-challenge</a> &gt; <a href="index.source.html" class="el_package">com.dguerrar.validators.impl</a> &gt; <span class="el_source">OrderValidatorImpl.java</span></div><h1>OrderValidatorImpl.java</h1><pre class="source lang-java linenums">package com.dguerrar.validators.impl;
+
+import java.math.BigInteger;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.dguerrar.constants.Constants;
+import com.dguerrar.controllers.exception.InvalidOrderException;
+import com.dguerrar.controllers.exception.ParseableOrderRuntimeException;
+import com.dguerrar.domain.Line;
+import com.dguerrar.domain.Order;
+import com.dguerrar.domain.ProcessingOrder;
+import com.dguerrar.domain.base.DataContainer;
+import com.dguerrar.generic.GenericModule;
+import com.dguerrar.validators.OrderValidator;
+
+
+@Component
+<span class="fc" id="L21">public class OrderValidatorImpl extends GenericModule implements OrderValidator{</span>
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2648130821574786963L;
+	
+	@Autowired
+	private DataContainer container;
+
+	@Override
+	public void validate(ProcessingOrder porder) throws ParseableOrderRuntimeException,InvalidOrderException {
+<span class="fc" id="L33">		log.debug(&quot;--&gt;validate (order {})&quot;,porder);</span>
+<span class="fc" id="L34">		long start=0l;</span>
+		
+<span class="pc bpc" id="L36" title="3 of 8 branches missed.">		if (porder==null || porder.getOrder()==null || porder.getOrder().getId() ==null || porder.getOrder().getStore_id()==null) {</span>
+<span class="fc" id="L37">			throw new InvalidOrderException(Constants.ERROR_FORMAT_INCORRECT);</span>
+		}
+<span class="fc" id="L39">		Order order= porder.getOrder();</span>
+		
+<span class="fc bfc" id="L41" title="All 2 branches covered.">		if (order.getLines().isEmpty()) {</span>
+<span class="fc" id="L42">			throw new ParseableOrderRuntimeException(Constants.ERROR_EMPTY_LINES) ;  //lines are not sequential</span>
+		}
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		for(Line l:order.getLines()) {</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">			if (start!=0) {</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">				if ((start +1)!= l.getLine_number()) {</span>
+<span class="fc" id="L47">					throw new ParseableOrderRuntimeException(Constants.ERROR_NON_SEQUENTIAL_LINES) ;  //lines are not sequential</span>
+				}
+<span class="fc" id="L49">				start++;</span>
+				}
+			else { //start=00
+<span class="fc" id="L52">				start=l.getLine_number();</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">				if (start!=1){</span>
+<span class="fc" id="L54">					throw new ParseableOrderRuntimeException(Constants.ERROR_NUMBER_LINES);//lines does not start at 1</span>
+				}
+			}
+<span class="fc" id="L57">		}</span>
+		
+		//test the previous existence of the order in the table of current shop
+		
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (container.getRepositoryOrderNumbers().containsKey(order.getStore_id())) {</span>
+<span class="fc" id="L62">			List&lt;Long&gt; idStoreList=container.getRepositoryOrderNumbers().get(order.getStore_id());</span>
+			
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">			if (idStoreList.contains(order.getId())) {</span>
+<span class="fc" id="L65">				throw new InvalidOrderException(Constants.ERROR_EXISTING_ORDER);</span>
+			}
+			
+		}
+		
+		
+<span class="fc" id="L71">		log.debug(&quot;&lt;--validate (order)&quot;);</span>
+
+		
+		
+<span class="fc" id="L75">	}</span>
+
+	@Override
+	protected Class&lt;?&gt; getLogClass() {
+		// TODO Auto-generated method stub
+<span class="fc" id="L80">		return OrderValidatorImpl.class;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderManagerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">magento-coding-challenge</a> &gt; <a href="index.source.html" class="el_package">com.dguerrar.managers.impl</a> &gt; <span class="el_source">OrderManagerImpl.java</span></div><h1>OrderManagerImpl.java</h1><pre class="source lang-java linenums">package com.dguerrar.managers.impl;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.dguerrar.constants.Constants;
+import com.dguerrar.controllers.exception.InvalidOrderException;
+import com.dguerrar.controllers.exception.ParseableOrderRuntimeException;
+import com.dguerrar.converter.OrderConverter;
+import com.dguerrar.domain.Notification;
+import com.dguerrar.domain.Order;
+import com.dguerrar.domain.ProcessingOrder;
+import com.dguerrar.domain.base.DataContainer;
+import com.dguerrar.generic.GenericModule;
+import com.dguerrar.managers.NotificationManager;
+import com.dguerrar.managers.OrderManager;
+import com.dguerrar.validators.OrderValidator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+
+@Service
+<span class="fc" id="L26">public class OrderManagerImpl extends GenericModule implements OrderManager {</span>
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 788056913502531324L;
+
+	@Autowired
+	private DataContainer container;
+	
+	@Autowired
+	private OrderValidator validator;
+	@Autowired
+	NotificationManager notificationManager;
+	
+	@Override
+	public void addOrder(ProcessingOrder order) throws InvalidOrderException, ParseableOrderRuntimeException,JsonProcessingException,IOException {
+		
+
+<span class="fc" id="L45">		validator.validate(order);</span>
+		
+		
+<span class="fc" id="L48">		Long storeId=order.getOrder().getStore_id();</span>
+		List&lt;Order&gt; orderList;
+		List&lt;Long&gt; indexList;
+		
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (container.getRepository().containsKey(storeId)) {</span>
+<span class="nc" id="L53">			orderList=container.getRepository().get(storeId);</span>
+<span class="nc" id="L54">			indexList=container.getRepositoryOrderNumbers().get(storeId);</span>
+		}else {
+<span class="fc" id="L56">			orderList= new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L57">			indexList=  new ArrayList&lt;&gt;();</span>
+
+		}
+<span class="fc" id="L60">		orderList.add(order.getOrder());</span>
+<span class="fc" id="L61">		indexList.add(order.getOrder().getId());</span>
+<span class="fc" id="L62">		container.getRepository().put(storeId, orderList);</span>
+<span class="fc" id="L63">		container.getRepositoryOrderNumbers().put(storeId, indexList);</span>
+		
+
+<span class="fc" id="L66">		Notification not= new Notification(Constants.EMAIL_TO,Constants.EMAIL_SUBJECT,OrderConverter.serialize(order.getOrder()));</span>
+<span class="fc" id="L67">		notificationManager.sendNotification(not);</span>
+<span class="fc" id="L68">	}</span>
+
+	@Override
+	protected Class&lt;?&gt; getLogClass() {
+		// TODO Auto-generated method stub
+<span class="fc" id="L73">		return OrderManagerImpl.class;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

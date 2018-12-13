@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderControllerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">magento-coding-challenge</a> &gt; <a href="index.source.html" class="el_package">com.dguerrar.controllers.impl</a> &gt; <span class="el_source">OrderControllerImpl.java</span></div><h1>OrderControllerImpl.java</h1><pre class="source lang-java linenums">package com.dguerrar.controllers.impl;
+
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.dguerrar.controllers.OrderController;
+import com.dguerrar.controllers.exception.InvalidOrderException;
+import com.dguerrar.controllers.exception.OrderRuntimeException;
+import com.dguerrar.controllers.exception.ParseableOrderRuntimeException;
+import com.dguerrar.domain.Order;
+import com.dguerrar.domain.ProcessingOrder;
+import com.dguerrar.generic.GenericModule;
+import com.dguerrar.managers.OrderManager;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.dguerrar.constants.Constants;
+
+@RestController
+<span class="fc" id="L27">public class OrderControllerImpl extends GenericModule implements OrderController {</span>
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7751773573540968042L;
+
+	
+	@Autowired
+	private OrderManager orderManager;
+	
+
+
+	@Override
+	@PostMapping(Constants.ENDPOINT_ORDERS)
+	public ResponseEntity addOrder(@RequestBody ProcessingOrder order)
+			throws OrderRuntimeException, ParseableOrderRuntimeException, InvalidOrderException, JsonProcessingException, IOException{
+<span class="fc" id="L44">		log.debug(&quot;--&gt;addOrder (order {})&quot;, order);</span>
+		// TODO Auto-generated method stub
+<span class="fc" id="L46">		orderManager.addOrder(order);</span>
+<span class="fc" id="L47">		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(Constants.INFO_SUCESS);</span>
+	}
+
+	
+	@Override
+	protected Class&lt;?&gt; getLogClass() {
+		// TODO Auto-generated method stub
+<span class="fc" id="L54">		return OrderControllerImpl.class;</span>
+	}
+	
+	public OrderManager getOrderManager() {
+<span class="nc" id="L58">		return orderManager;</span>
+	}
+
+	public void setOrderManager(OrderManager orderManager) {
+<span class="nc" id="L62">		this.orderManager = orderManager;</span>
+<span class="nc" id="L63">	}</span>
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
