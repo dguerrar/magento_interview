@@ -28,7 +28,7 @@ public class NotificationManagerImpl extends GenericModule implements Notificati
 
 	@Override
 	public boolean sendNotification(Notification not) {
-		container.getNotificationQueue().add(not);
+		container.getNotificationQueue().offer(not);
 		return true;
 	}
 

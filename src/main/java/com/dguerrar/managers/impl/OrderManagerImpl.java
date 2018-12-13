@@ -64,7 +64,7 @@ public class OrderManagerImpl extends GenericModule implements OrderManager {
 		
 
 		Notification not= new Notification(Constants.EMAIL_TO,Constants.EMAIL_SUBJECT,OrderConverter.serialize(order.getOrder()));
-		
+		notificationManager.sendNotification(not);
 	}
 
 	@Override

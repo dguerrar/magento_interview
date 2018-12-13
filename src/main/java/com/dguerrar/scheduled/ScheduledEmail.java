@@ -1,27 +1,35 @@
-package com.dguerrar.quarts.jobs;
+package com.dguerrar.scheduled;
 
 import java.util.Calendar;
 
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import com.dguerrar.domain.Notification;
 import com.dguerrar.domain.base.DataContainer;
+import com.dguerrar.generic.GenericModule;
 
-public class EmailJob extends QuartzJobBean {
+@Component
+public class ScheduledEmail extends GenericModule {
 
-	protected Logger log = LoggerFactory.getLogger(EmailJob.class);
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 816093237848987628L;
+
 	
 	@Autowired
 	private DataContainer container;
 	
 	@Override
-	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-		
+	protected Class<?> getLogClass() {
+		return ScheduledEmail.class;
+	}
+	
+	
+	@Scheduled(cron = "*/10 * * * * *")
+	public void processNotifications() {
 		long time= Calendar.getInstance().getTimeInMillis();
 		//in order to make a FAKE error sending email,
 		if (time %2==0) {
@@ -37,11 +45,7 @@ public class EmailJob extends QuartzJobBean {
 			}
 			
 		}
-		
-		
-		
 	}
-	
 	
 	private void sendEmail(String to, String subject, String content) {
 		log.info("sending email to: {} , {}, {}", to, subject,content);

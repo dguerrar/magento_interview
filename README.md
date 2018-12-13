@@ -31,7 +31,7 @@ Also, a jacoco test for the test coverage is also created when compiling and exe
 
 ##Emails.
 No server have been configured. A 'fake' service have been developed. All the emails are queued and if the actualtime %2 ==0 (serves me as a fake 'down email service, the queue is processed and the emails served).
-This queue is processed every 5 minutes.
+This queue is processed every 10 seconds.
 
 _______________________________________________________________________________________________
 
