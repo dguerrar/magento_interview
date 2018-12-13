@@ -2,7 +2,7 @@
 
 the application is an standalone Spring boot Rest server.
 
-the EndPoint is http://localhot:8080/orders
+the EndPoint is http://localhost:8080/orders
 
 There is an entire Test for the controllers  (Integration test)on 
 com.dguerrar.integration
